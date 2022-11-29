@@ -1,7 +1,9 @@
-#Tavutesti#
+# ----- Tavutesti ----- #
+#Tehnyt: Aarni Junkkala
+
 import Tavuttaja
 
-kirjoita = True #Vaihda jos haluat kokeilla valmista sanasettiä
+kirjoita = False #Vaihda jos haluat kokeilla valmista sanasettiä
 
 testattavat = ["", "VÄLJENTÄVÄT DIFTONGIT:", "sieni", "hygienia", "tuoli", "tie", "orjien",
                "", "TAVALLISET DIFTONGIT:", "taide", "peite", "toinen", "tuisku", "hyi", "täit", "töitä", "taulu", "teurastaa", "tiuskaista", "touhuta", "äyriäinen", "töykeä", "siistiytyä", "terveys",

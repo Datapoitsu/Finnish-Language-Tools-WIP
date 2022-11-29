@@ -1,3 +1,6 @@
+# ----- Sanaerittelijä ----- #
+#Tehnyt: Aarni Junkkala
+
 #Muuttaa syötetyn lauseen sanoiksi listaan, poistaen erikoismerkit väleistä
 import SuomiKieliKirjasto as kirjasto
 
