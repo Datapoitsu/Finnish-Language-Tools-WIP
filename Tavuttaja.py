@@ -1,12 +1,40 @@
-# ----- Tavutuksen säännöt ----- #
+## -------------------- Tavuttaja -------------------- ##
+#Tehnyt: Aarni Junkkala
+
 import SuomiKieliKirjasto as kirjasto #Sisällyttää listoja suomenkielen rakenteesta.
 import SanojenErittelija as erittelija #Jakaa lauseen sanoiksi, jolloin lauseen tavuttaminen on helpompaa
+
+# ----- Tavutuksen säännöt ----- #
 
 #Konsonantteja voi olla tavun alussa vaikka kuinka monta, mutta esiintyy vain ulkomaalaisissa sanoissa. esim: sprint|te|ri
 #Erikoismerkit eivät tule tavuihin ja jakaa tavun esim: vaa'assa -> vaa|as|sa
 #Yhdyssanat, jonka ensimmäinen päättyy konsonanttiin ja toinen alkaa vokaalilla ei toimi. Mahdoton korjata ilman sanakirjaa. Esim: a|si|an|o|mai|set, näy|tön|oh|jain
 #Ei tunnista sanan perusmuotoa. esim: ha|uis|sa VS hau|is|sa, ensimmäinen tarkoittaa hakua ja toinen haukea
-#numerot laitetaan omiksi tavuiksi: Esim: k1ssa -> k|1|ssa. Ei kannata laittaa numeroita, jos ei pakko ole.
+
+# ----- Tavutyyppi funktiot ----- ##
+#NOTE: Tarkoitettu tavittajaa varten
+
+def LyhytTavut(tavu): #Lyhyet tavut päättyvät lyhyeen vokaaliin. Esim. Ki-vi, koi-ra, kis-sa
+    if tavu[-1] in kirjasto.vokaalit and tavu[-2] not in kirjasto.vokaalit:
+        return True
+    return False
+
+def PitkäTavu(tavu): #Kaikki tavut, jotka eivät ole lyhyitä tavuja, ovat pitkiä. Esim. Maa, Kai-vaa, huu-taa, sii-maa
+    if LyhytTavut(tavu) == False:
+        return True
+    return False
+
+def Avotavu(tavu): #Tavu päättyy vokaaliin. Esim. Ka-la, Pe-li, Ki-ta-ra
+    if tavu[-1] in kirjasto.vokaalit:
+        return True
+    return False
+
+def Umpitavu(tavu): #Tavu päättyy konsonanttiin. Esim. Läm-min, kum-man, nal-let
+    if tavu[-1] not in kirjasto.vokaalit:
+        return True
+    return False
+
+# ----- Tavuttajan funktiot ----- #
 
 def HaeKirjainTyypit(sana):
     #HUOM, jos kirjaintyypin hakemiselle tulee tarvetta tämän funktion voi muuttaa omaksi tiedostokseen.
@@ -29,12 +57,6 @@ def HaeKirjainTyypit(sana):
 
 ## -- Leikkauksen tarkistukset -- ##
 #Jokaiselle kirjain tyypille on oma funktio, joka tarkistaa, että leikataanko tavu.
-
-def TarkistaDiftongi(sana, index):
-    onDiftongi = "false" #Jos true niin ei tavuteta
-    if(index + 2 > len(sana)): #sanassa kirjaimia jäljellä indexsin jälkeen
-        if(sana[index] + sana[index + 1] in diftongit):
-            onDiftongi = "true"
 
 def TarkistaErikoisMerkki(kirjaintyypit, index):
     if(index + 1 < len(kirjaintyypit)):
@@ -151,5 +173,5 @@ def TavutaLause(lause):
 #Pyörittää funktiota toistuvasti, jos ei kutsuta ulkopuolelta
 if __name__ == "__main__":
    while True:
-       print(TavutaLause(input("Syötä sana, jonka haluat tuvuttaa: ")))
+       print(TavutaLause(input("Syötä sana, jonka haluat tavuttaa: ")))
        print("--------------------")

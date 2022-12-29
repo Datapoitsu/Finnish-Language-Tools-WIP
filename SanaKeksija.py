@@ -1,4 +1,6 @@
-# Sana keksijä #
+# -------------------- Sana keksijä -------------------- #
+#Tehnyt: Aarni Junkkala
+
 #Suomalaisissa sanoissa on kuvioita, jonka vuoksi sana keksijän luominen on mahdollista
 #Sana keksijä ei ole täydellinen, joskus keksii sanan, joka on jo olemassa suomen kielessä.
 #Olisin voinut asettaa sana keksijän muotoilemaan sanat, johonkin suomen kieliseen muotoon,

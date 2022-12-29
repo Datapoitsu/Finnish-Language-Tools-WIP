@@ -1,3 +1,6 @@
+# -------------------- Sanojen erittelijä -------------------- #
+#Tehnyt: Aarni Junkkala
+
 #Muuttaa syötetyn lauseen sanoiksi listaan, poistaen erikoismerkit väleistä
 import SuomiKieliKirjasto as kirjasto
 
@@ -17,7 +20,6 @@ def MuutaSanoiksi(lause):
         sanat.remove("")
     return sanat
 
-#Pyörittää funktiota toistuvasti, jos ei kutsuta ulkopuolelta
 if __name__ == "__main__":
    while True:
     print(MuutaSanoiksi(input("Syötä lause, jonka haluat muuttaa sanoiksi: ")))
