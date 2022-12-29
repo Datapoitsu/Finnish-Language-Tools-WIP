@@ -12,16 +12,17 @@ def onkoLuku(luku):
         luku = luku[1:]
 
     desimaaliErotinLoydetty = False
-    for char in luku:
-        if(char not in "1234567890.,"):
+    for merkki in luku:
+        if(merkki not in "1234567890.,"):
             return False
-        elif char in ".,":
+        elif merkki in ".,":
             if desimaaliErotinLoydetty:
                 return False
             desimaaliErotinLoydetty = True
     
     return True
 
+#Sisäinen funktio, jota käytetää desimaalilukujen "jakajien" numeraalien muodostamiseen
 def DesimaaliNumeraali(desimaalienmaara):
     DesimaaliNumeraalit = \
     [
@@ -46,45 +47,46 @@ def DesimaaliNumeraali(desimaalienmaara):
             return DesimaaliNumeraalit[i][1] 
         if(DesimaaliNumeraalit[i][0] < desimaalienmaara):
             return DesimaaliNumeraali(desimaalienmaara - DesimaaliNumeraalit[i][0]) + DesimaaliNumeraalit[i][1]
-    
 
+#Tämä funktio tekee juuri sitä, mitä odotat sen tekevän
 def MuunnaNumeraaliksi(numero):
-    inputString = str(numero)
-    
-    if not isANumber(inputString):
+    #Ensin varmistetaan, että numero on kelpoisessa muodossa
+    numero = str(numero)
+    if not onkoLuku(numero):
         return False
 
-    beforeDecimalPoint = afterDecimalPoint = ""
-    result = ""
+    #Sen jälkeen erotellaan numero osiin desimaalierottimesta ja käsitellään miinus merkki
+    ennenDesimaaliErotinta = JalkeenDesimaaliErottimen = ""
+    tulos = ""
 
-    if inputString[0] == "-":
-        result = "miinus "
-        inputString = inputString[1:]
+    if numero[0] == "-":
+        tulos = "miinus "
+        numero = numero[1:]
 
     desimaaliErotinLoydetty = False
-    while len(inputString) != 0:
-        if inputString[0] in ",.":
+    while len(numero) != 0:
+        if numero[0] in ",.":
             desimaaliErotinLoydetty = True
-            inputString = inputString[1:]
+            numero = numero[1:]
             continue
 
         if not desimaaliErotinLoydetty:
-            beforeDecimalPoint += inputString[0]
+            ennenDesimaaliErotinta += numero[0]
         else:
-            afterDecimalPoint += inputString[0]
+            JalkeenDesimaaliErottimen += numero[0]
 
-        inputString = inputString[1:]
+        numero = numero[1:]
 
-    if beforeDecimalPoint == "":
-        beforeDecimalPoint = 0
-    beforeDecimalPoint = int(beforeDecimalPoint)
+    if ennenDesimaaliErotinta == "":
+        ennenDesimaaliErotinta = 0
+    ennenDesimaaliErotinta = int(ennenDesimaaliErotinta)
     
-    if afterDecimalPoint == "":
-        afterDecimalPoint = "0"
-    DecimalPlace = len(afterDecimalPoint)
-    afterDecimalPoint = int(afterDecimalPoint)
+    if JalkeenDesimaaliErottimen == "":
+        JalkeenDesimaaliErottimen = "0"
+    DecimalPlace = len(JalkeenDesimaaliErottimen)
+    JalkeenDesimaaliErottimen = int(JalkeenDesimaaliErottimen)
 
-    #Before Decimal Point
+    #Sitten listataan taikalistat, joista löytyy tarpeellinen data numeraalien muodostamiseen. googol ja googolplex jätetty pois koska ovat käytännössä liian isoja ollakseen hyödyllisiä.
     Numeraalit = \
     [
         [0, "nolla", "nollaa"],
@@ -125,46 +127,50 @@ def MuunnaNumeraaliksi(numero):
         [19, "yhdeksäntoista", "yhdeksäätoistaa"],
     ]
 
-    if(beforeDecimalPoint > 10 and beforeDecimalPoint < 20):
-        result += PoikkeusNumeraalit[beforeDecimalPoint-11][1]
+    #Sitten lähtee käsittely
+    if(ennenDesimaaliErotinta > 10 and ennenDesimaaliErotinta < 20): # 10-20 => poikkeus
+        tulos += PoikkeusNumeraalit[ennenDesimaaliErotinta-11][1]
     else:
         for i in range(len(Numeraalit)-1, -1, -1):
             if(i == 0):
-                result += "nolla"
+                #Seuraava jos estää nollan ilmaantuumisen desimaalien, joissa ei ole kokonaista numeroa ollenkaan, alussa
+                if JalkeenDesimaaliErottimen == 0:
+                    tulos += "nolla"
                 break
-            if(Numeraalit[i][0] * 2 <= beforeDecimalPoint):
-                result += MuunnaNumeraaliksi(str(beforeDecimalPoint)[:len(str(beforeDecimalPoint))-len(str(Numeraalit[i][0]))+1]) + Numeraalit[i][2]
-                if(beforeDecimalPoint%Numeraalit[i][0] != 0):
-                    result += MuunnaNumeraaliksi(beforeDecimalPoint%Numeraalit[i][0])
+            if(Numeraalit[i][0] * 2 <= ennenDesimaaliErotinta):
+                #Huomaa rekursio; Tässä tilanteessa, on numerosta erotettu isoin kokonainen nimetty numero, joka siihen mahtuu. Täytyy kuitenkin nimetä luku, joka osoittaa montako näitä on, ja mahdolliset luvut tämän jälkeen.
+                tulos += MuunnaNumeraaliksi(str(ennenDesimaaliErotinta)[:len(str(ennenDesimaaliErotinta))-len(str(Numeraalit[i][0]))+1]) + Numeraalit[i][2]
+                #Jos jäljelle jää vain nolla, ei sitä tarvitse nimetä
+                if(ennenDesimaaliErotinta%Numeraalit[i][0] != 0):
+                    tulos += MuunnaNumeraaliksi(ennenDesimaaliErotinta%Numeraalit[i][0])
                 break
-            if(Numeraalit[i][0] <= beforeDecimalPoint):
-                result += Numeraalit[i][1]
-                if(beforeDecimalPoint%Numeraalit[i][0] != 0):
-                    result += MuunnaNumeraaliksi(beforeDecimalPoint%Numeraalit[i][0])
+            if(Numeraalit[i][0] <= ennenDesimaaliErotinta):
+                #Tänne päädytään, jos isointa sopivaa nimettyä lukua on vain yksi kappale.
+                tulos += Numeraalit[i][1]
+                if(ennenDesimaaliErotinta%Numeraalit[i][0] != 0):
+                    tulos += MuunnaNumeraaliksi(ennenDesimaaliErotinta%Numeraalit[i][0])
                 break
 
-    if(afterDecimalPoint > 0):
-        result += " ja " + MuunnaNumeraaliksi(afterDecimalPoint) + " " + DesimaaliNumeraali(DecimalPlace) + "osaa"
-        
+    if(JalkeenDesimaaliErottimen > 0):
+        if(ennenDesimaaliErotinta > 0):
+            tulos += " ja "
+        tulos += MuunnaNumeraaliksi(JalkeenDesimaaliErottimen) + " " + DesimaaliNumeraali(DecimalPlace) + "osaa"
 
-    #print(result)
-    #print(beforeDecimalPoint)
-    #print(".")
-    #print(afterDecimalPoint)
+    return tulos
 
-    return result
 
+#Pieni pätkä, joka antaa testata koodia kun sitä ei käytetä kirjastona
 if __name__ == '__main__':
     while True:
         print("Syötä luku jonka haluat muuttaa numeraaleiksi, tai q poistuaksesi.")
-        inputString = input()
+        numero = input()
 
-        if inputString in ["q", "Q"]:
+        if numero in ["q", "Q"]:
             break
 
-        result = MuunnaNumeraaliksi(inputString)
-        if result is False:
+        tulos = MuunnaNumeraaliksi(numero)
+        if tulos is False:
             print("Syötäthän luvun, eikä mitä ikinä tuo olikaan!")
             continue
         else:
-            print(result)
+            print(tulos)
