@@ -1,5 +1,69 @@
-## -------------------- Numeraali Muunnin -------------------- ##
+## -------------------- Numeraali Muunnin -------------------- ## 
 #Written by: Veeti Junkkala
+
+#listataan taikalistat, joista löytyy tarpeellinen data numeraalimuunnoksiinn. googol ja googolplex jätetty pois koska ovat käytännössä liian isoja ollakseen hyödyllisiä.
+#Listassa numero on joko kymmenen potenssi tai raaka numero, listasta riippuen. Ensimmäinen teksti on perusmuoto ja toinen partitiivi.
+
+PotenssiNumeraalit = \
+    [
+        [0, "nolla", "nollaa"],
+        [1, "kymmenen", "kymmentä"],
+        [2, "sata", "sataa"],
+        [3, "tuhat", "tuhatta"],
+        [6, "miljoona", "miljoonaa"],
+        [9, "miljardi", "miljardia"],
+        [12, "biljoona", "biljoonaa"],
+        [18, "triljoona", "triljoonaa"],
+        [24, "kvardriljoona", "kvardriljoonaa"],
+        [30, "kvintiljoona", "kvintiljoonaa"],
+        [36, "sekstiljoona", "sekstiljoonaa"],
+        [42, "septiljoona", "septiljoonaa"],
+        [48, "oktiljoona", "oktiljoonaa"],
+        [54, "noniljoona", "noniljoonaa"],
+        [54, "noviljoona", "noviljoonaa"],
+        [60, "dekiljoona", "dekiljoonaa"]
+    ]
+MuutNumeraalit = \
+    [
+        [1, "yksi", "yhtä"],
+        [2, "kaksi", "kahta"],
+        [3, "kolme", "kolmea"],
+        [4, "neljä", "neljää"],
+        [5, "viisi", "viittä"],
+        [6, "kuusi", "kuutta"],
+        [7, "seitsemän", "seitsemää"],
+        [8, "kahdenksan", "kahdeksaa"],
+        [9, "yhdeksän", "yhdeksää"],
+    ]
+PoikkeusNumeraalit = \
+    [
+        [11, "yksitoista", "yhtätoistaa"],
+        [12, "kaksitoista", "kahtatoistaa"],
+        [13, "kolmetoista", "kolmeatoistaa"],
+        [14, "neljätoista", "neljäätoistaa"],
+        [15, "viisitoista", "viittätoistaa"],
+        [16, "kuusitoista", "kuuttatoistaa"],
+        [17, "seitsemäntoista", "seitsemäätoistaa"],
+        [18, "kahdenksantoista", "kahdeksaatoistaa"],
+        [19, "yhdeksäntoista", "yhdeksäätoistaa"],
+    ]
+DesimaaliNumeraalit = \
+    [
+        [1, "kymmenes"],
+        [2, "sadas"],
+        [3, "tuhannes"],
+        [6, "miljoonas"],
+        [9, "miljardis"],
+        [12, "biljoonas"],
+        [18, "triljoonas"],
+        [24, "kvardriljoonas"],
+        [30, "kvintiljoonas"],
+        [36, "sekstiljoonas"],
+        [42, "septiljoonas"],
+        [48, "oktiljoonas"],
+        [54, "noniljoonas"],
+        [60, "dekiljoonas"],
+    ]
  
  #Testaa, onko annettu luku kelvollinen luku. Oikeastaan tarpeellinen vain, jos luku annetaan stringinä.
 def onkoLuku(luku):
@@ -24,23 +88,6 @@ def onkoLuku(luku):
 
 #Sisäinen funktio, jota käytetää desimaalilukujen "jakajien" numeraalien muodostamiseen
 def DesimaaliNumeraali(desimaalienmaara):
-    DesimaaliNumeraalit = \
-    [
-        [1, "kymmenes"],
-        [2, "sadas"],
-        [3, "tuhannes"],
-        [6, "miljoonas"],
-        [9, "miljardis"],
-        [12, "biljoonas"],
-        [18, "triljoonas"],
-        [24, "kvardriljoonas"],
-        [30, "kvintiljoonas"],
-        [36, "sekstiljoonas"],
-        [42, "septiljoonas"],
-        [48, "oktiljoonas"],
-        [54, "noniljoonas"],
-        [60, "dekiljoonas"],
-    ]
 
     for i in range(len(DesimaaliNumeraalit)-1, -1, -1):
         if DesimaaliNumeraalit[i][0] == desimaalienmaara:
@@ -86,69 +133,30 @@ def MuunnaNumeraaliksi(numero):
     DecimalPlace = len(JalkeenDesimaaliErottimen)
     JalkeenDesimaaliErottimen = int(JalkeenDesimaaliErottimen)
 
-    #Sitten listataan taikalistat, joista löytyy tarpeellinen data numeraalien muodostamiseen. googol ja googolplex jätetty pois koska ovat käytännössä liian isoja ollakseen hyödyllisiä.
-    Numeraalit = \
-    [
-        [0, "nolla", "nollaa"],
-        [1, "yksi", "yhtä"],
-        [2, "kaksi", "kahta"],
-        [3, "kolme", "kolmea"],
-        [4, "neljä", "neljää"],
-        [5, "viisi", "viittä"],
-        [6, "kuusi", "kuutta"],
-        [7, "seitsemän", "seitsemää"],
-        [8, "kahdenksan", "kahdeksaa"],
-        [9, "yhdeksän", "yhdeksää"],
-        [10, "kymmenen", "kymmentä"],
-        [100, "sata", "sataa"],
-        [1000, "tuhat", "tuhatta"],
-        [int(1e6), "miljoona", "miljoonaa"],
-        [int(1e9), "miljardi", "miljardia"],
-        [int(1e12), "biljoona", "biljoonaa"],
-        [int(1e18), "triljoona", "triljoonaa"],
-        [int(1e24), "kvardriljoona", "kvardriljoonaa"],
-        [int(1e30), "kvintiljoona", "kvintiljoonaa"],
-        [int(1e36), "sekstiljoona", "sekstiljoonaa"],
-        [int(1e42), "septiljoona", "septiljoonaa"],
-        [int(1e48), "oktiljoona", "oktiljoonaa"],
-        [int(1e54), "noniljoona", "noniljoonaa"],
-        [int(1e60), "dekiljoona", "dekiljoonaa"]
-    ]
-    PoikkeusNumeraalit = \
-    [
-        [11, "yksitoista", "yhtätoistaa"],
-        [12, "kaksitoista", "kahtatoistaa"],
-        [13, "kolmetoista", "kolmeatoistaa"],
-        [14, "neljätoista", "neljäätoistaa"],
-        [15, "viisitoista", "viittätoistaa"],
-        [16, "kuusitoista", "kuuttatoistaa"],
-        [17, "seitsemäntoista", "seitsemäätoistaa"],
-        [18, "kahdenksantoista", "kahdeksaatoistaa"],
-        [19, "yhdeksäntoista", "yhdeksäätoistaa"],
-    ]
-
     #Sitten lähtee käsittely
-    if(ennenDesimaaliErotinta > 10 and ennenDesimaaliErotinta < 20): # 10-20 => poikkeus
+    if(ennenDesimaaliErotinta != 0 and ennenDesimaaliErotinta < 10):
+        tulos += MuutNumeraalit[ennenDesimaaliErotinta-1][1]
+    elif(ennenDesimaaliErotinta > 10 and ennenDesimaaliErotinta < 20): # 10-20 => poikkeus
         tulos += PoikkeusNumeraalit[ennenDesimaaliErotinta-11][1]
     else:
-        for i in range(len(Numeraalit)-1, -1, -1):
+        for i in range(len(PotenssiNumeraalit)-1, -1, -1):
             if(i == 0):
                 #Seuraava jos estää nollan ilmaantuumisen desimaalien, joissa ei ole kokonaista numeroa ollenkaan, alussa
                 if JalkeenDesimaaliErottimen == 0:
                     tulos += "nolla"
                 break
-            if(Numeraalit[i][0] * 2 <= ennenDesimaaliErotinta):
+            if(10 ** PotenssiNumeraalit[i][0] * 2 <= ennenDesimaaliErotinta):
                 #Huomaa rekursio; Tässä tilanteessa, on numerosta erotettu isoin kokonainen nimetty numero, joka siihen mahtuu. Täytyy kuitenkin nimetä luku, joka osoittaa montako näitä on, ja mahdolliset luvut tämän jälkeen.
-                tulos += MuunnaNumeraaliksi(str(ennenDesimaaliErotinta)[:len(str(ennenDesimaaliErotinta))-len(str(Numeraalit[i][0]))+1]) + Numeraalit[i][2]
+                tulos += MuunnaNumeraaliksi(str(ennenDesimaaliErotinta)[:len(str(ennenDesimaaliErotinta))-len(str(10 ** PotenssiNumeraalit[i][0]))+1]) + PotenssiNumeraalit[i][2]
                 #Jos jäljelle jää vain nolla, ei sitä tarvitse nimetä
-                if(ennenDesimaaliErotinta%Numeraalit[i][0] != 0):
-                    tulos += MuunnaNumeraaliksi(ennenDesimaaliErotinta%Numeraalit[i][0])
+                if(ennenDesimaaliErotinta % 10 ** PotenssiNumeraalit[i][0] != 0):
+                    tulos += MuunnaNumeraaliksi(ennenDesimaaliErotinta % 10 ** PotenssiNumeraalit[i][0])
                 break
-            if(Numeraalit[i][0] <= ennenDesimaaliErotinta):
+            if(10 ** PotenssiNumeraalit[i][0] <= ennenDesimaaliErotinta):
                 #Tänne päädytään, jos isointa sopivaa nimettyä lukua on vain yksi kappale.
-                tulos += Numeraalit[i][1]
-                if(ennenDesimaaliErotinta%Numeraalit[i][0] != 0):
-                    tulos += MuunnaNumeraaliksi(ennenDesimaaliErotinta%Numeraalit[i][0])
+                tulos += PotenssiNumeraalit[i][1]
+                if(ennenDesimaaliErotinta % 10 ** PotenssiNumeraalit[i][0] != 0):
+                    tulos += MuunnaNumeraaliksi(ennenDesimaaliErotinta % 10 ** PotenssiNumeraalit[i][0])
                 break
 
     if(JalkeenDesimaaliErottimen > 0):
