@@ -1,4 +1,4 @@
-# ----- Sana keksijä ----- #
+# -------------------- Sana keksijä -------------------- #
 #Tehnyt: Aarni Junkkala
 
 #Suomalaisissa sanoissa on kuvioita, jonka vuoksi sana keksijän luominen on mahdollista

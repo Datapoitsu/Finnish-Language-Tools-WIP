@@ -1,4 +1,4 @@
-# ----- Rakenne Tiedosto ----- #
+## -------------------- Suomi kieli kirjasto -------------------- ##
 #Tehnyt: Aarni Junkkala
 
 #Sisältää listoja suomen kielestä. Esim: aakkoset, vokaali, diftongit, äätämisryhmät, yms.
@@ -53,7 +53,7 @@ Soinnittomat = ['p', 't', 'k', 's']
 ## -------------------- Diftongit -------------------- ##
 #diftongit, Vokaalit jotka voivat olla peräkkäin samassa tavussa
 diftongit = ['ei', 'ai', 'oi', 'ui', 'äi', 'öi', 'yi',    'au', 'eu', 'iu', 'ou',     'äy', 'öy', 'iy', 'ey']
-valjenevatdiftongit = ['ie',     'uo', 'yö'] #väljenevät diftongit ovat diftongeja, jos ne ovat ensimmäisessä tavussa. Esim: sie|ni  hy|gi|e|ni|a
+valjenevatdiftongit = ['ie', 'uo', 'yö'] #väljenevät diftongit ovat diftongeja, jos ne ovat ensimmäisessä tavussa. Esim: sie|ni  hy|gi|e|ni|a
 #Konsonanttiyhtymät
 kahdenKonsonantinYhtymat = ['lt', 'lk', 'lm', 'lp', 'lj', 'lv', 'ls', 'lh', 'rt', 'rk', 'rm', 'rp', 'rj', 'rv', 'rs', 'rh', 'rn', 'ht', 'hd', 'hk', 'hm', 'hj', 'hn', 'hv', 'hl', 'hr', 'st', 'sk', 'sp', 'sm','sn', 'sh', 'sv', 'ts', 'tk', 'tp', 'tj', 'tr', 'tv', 'th', 'ps', 'pr', 'pl', 'ks', 'kr', 'nk', 'nt', 'np', 'ns', 'nh', 'nj', 'mp', 'ms']
 kolmenKonsonantinYhtymat = ['mpp', 'ntt', 'nss', 'nkk', 'lpp', 'ltt', 'lss', 'lkk', 'rpp', 'rtt', 'rss', 'rkk']
