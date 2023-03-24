@@ -9,7 +9,7 @@ import SuomiKieliKirjasto as kirjasto
 def MuutaSanoiksi(lause):
     #Päätemerkit korvataan väli lyönneillä, jolloin sanat pysyvät eriteltyinä
     for i in range(len(kirjasto.paatemerkit)):
-        lause = lause.replace(kirjasto.paatemerkit[i], " ")
+        lause = lause.replace(kirjasto.paatemerkit[i], "")
     #Sulkeet poistetaan kokokaan, koska ne eivät ole osa sanaa
     for i in range(len(kirjasto.sulkeet)):
         lause = lause.replace(kirjasto.sulkeet[i], "")

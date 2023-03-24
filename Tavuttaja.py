@@ -1,5 +1,5 @@
 ## -------------------- Tavuttaja -------------------- ##
-#Tehnyt: Aarni Junkkala
+#Written by: Aarni Junkkala
 
 import SuomiKieliKirjasto as kirjasto #Sisällyttää listoja suomenkielen rakenteesta.
 import SanojenErittelija as erittelija #Jakaa lauseen sanoiksi, jolloin lauseen tavuttaminen on helpompaa
@@ -12,7 +12,7 @@ import SanojenErittelija as erittelija #Jakaa lauseen sanoiksi, jolloin lauseen 
 #Ei tunnista sanan perusmuotoa. esim: ha|uis|sa VS hau|is|sa, ensimmäinen tarkoittaa hakua ja toinen haukea
 
 # ----- Tavutyyppi funktiot ----- ##
-#NOTE: Tarkoitettu tavittajaa varten
+#NOTE: Tarkoitettu taivuttajaa varten, voi olla käyttöä muuallakin
 
 def LyhytTavut(tavu): #Lyhyet tavut päättyvät lyhyeen vokaaliin. Esim. Ki-vi, koi-ra, kis-sa
     if tavu[-1] in kirjasto.vokaalit and tavu[-2] not in kirjasto.vokaalit:
@@ -75,7 +75,7 @@ def TarkistaNumero(kirjaintyypit, index):
             return True
     return False
 
-def TarkistaKonsonantti(kirjaintyypit, index):    
+def TarkistaKonsonantti(kirjaintyypit, index):
     #Tarkistaa neljän konsonantin ekstran -> eks|tra
     if index >= 2 and index + 2 < len(kirjaintyypit):
         if kirjaintyypit[index - 1] == "k" and kirjaintyypit[index] == "k" and kirjaintyypit[index + 1] == "k" and kirjaintyypit[index + 2] == "k":
@@ -85,10 +85,10 @@ def TarkistaKonsonantti(kirjaintyypit, index):
     if index >= 3 and index + 1 < len(kirjaintyypit):
         if kirjaintyypit[index - 2] == "k" and kirjaintyypit[index - 1] == "k" and kirjaintyypit[index] == "k" and kirjaintyypit[index + 1] == "k":
             return False
-    
+
     #Tavallinen tavutus konsonanteilla eli seuraava konsonantti ja sitä seuraava vokaali #Esim: saa|ri, olemme siis esimerkissä kirjaimessa a ennen r kirjainta
     if(index + 2 < len(kirjaintyypit)): #Jäljellä kaksi kirjainta sanassa
-        if kirjaintyypit[index + 1] == "k" and kirjaintyypit[index + 2] == "v": 
+        if kirjaintyypit[index + 1] == "k" and kirjaintyypit[index + 2] == "v":
             for i in range(index + 1): # Tarkistaa että onko kaikki edeltävät kirjaimet konsonantteja
                 if kirjaintyypit[i] == "v": #Jos edeltävä on vokaali, niin poikki
                    LeikkaaTavu()
@@ -104,7 +104,7 @@ def TarkistaVokaali(sana, kirjaintyypit, index):
                 if sana[index] + sana[index + 1] in kirjasto.valjenevatdiftongit:
                     return False
             #Perus diftongi
-            if sana[index] + sana[index + 1] in kirjasto.diftongit: 
+            if sana[index] + sana[index + 1] in kirjasto.diftongit:
                 return False
             #Sama vokaali tuplana
             if sana[index] == sana[index + 1]:
@@ -125,20 +125,22 @@ def LeikkaaTavu():
     tavu = ""
 
 def Tavuta(sana):
+    if sana == "":
+        return False
+
     global tavut
     global tavu
     tavut = []
     tavu = ""
-    
+
     #Kirjoittaa ylös isot kirjaimet, niin on helpompi verrata
     isot = []
     for i in range(len(sana)):
         isot.append(sana[i].isupper())
     sana = sana.lower() #sana pieneksi
-    
-    #Hakee kirjaintyypit
-    kirjaintyypit = HaeKirjainTyypit(sana.lower()) 
 
+    #Hakee kirjaintyypit
+    kirjaintyypit = HaeKirjainTyypit(sana.lower())
     #Jokainen kirjain tavutetaan niin, että kirjain lisätään tavuun, sitten haistellaan, että leikataanko poikki.
     for i in range(len(sana)):
         if kirjaintyypit[i] != "e": #Erikoismerkkiä ei tule tavuihin
@@ -146,10 +148,10 @@ def Tavuta(sana):
                 tavu += sana[i].upper()
             if isot[i] == False:
                 tavu += sana[i]
-                
+
         if kirjaintyypit[i] == "e": #Ohitetaan
             continue
-        
+
         if TarkistaErikoisMerkki(kirjaintyypit, i) == True:
             continue
         if TarkistaKonsonantti(kirjaintyypit, i) == True:
@@ -158,7 +160,7 @@ def Tavuta(sana):
             continue
         if TarkistaNumero(kirjaintyypit, i) == True:
             continue
-        
+
         if i == len(sana) - 1:
             LeikkaaTavu()
     return tavut
@@ -170,7 +172,6 @@ def TavutaLause(lause):
         tavutetutSanat.append(Tavuta(sanat[i]))
     return tavutetutSanat
 
-#Pyörittää funktiota toistuvasti, jos ei kutsuta ulkopuolelta
 if __name__ == "__main__":
    while True:
        print(TavutaLause(input("Syötä sana, jonka haluat tavuttaa: ")))
