@@ -1,4 +1,4 @@
-## -------------------- Suomi kieli kirjasto -------------------- ##
+# ----- Rakenne Tiedosto ----- #
 #Tehnyt: Aarni Junkkala
 
 #Sisältää listoja suomen kielestä. Esim: aakkoset, vokaali, diftongit, äätämisryhmät, yms.
@@ -13,6 +13,7 @@ konsonantit = ['b', 'c', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'n', 'p', 'q', 
 suomenkielisetKonsonantit = ['h', 'j', 'k', 'l', 'm', 'n', 'p', 'r', 's', 't', 'v'] #jätin "g" ja "d" kirjaimen pois vaikka kuuluisikin, koska on todella harvinaisia
 
 ## -------------------- Ääntäminen -------------------- ##
+LausuntaNimet = ['aa','bee','cee','dee','ee','äf','gee','hoo','ii','jii','koo','äl','äm','än','oo','pee','quu','är','äs','tee','uu','vee','vee','äks','yy','tseta','åå','ää','öö']
 # -- Vokaali soinnut -- ##
 etuVokaalit = ['ä', 'ö', 'y']
 keskiVokaalit = ["i", "e"]    #Tälle uusinimi
@@ -26,7 +27,7 @@ väljätVokaalit = ['ä','a']
 
 
 #Ääntämisryhmät
-dentaalisetKonsonantit = ['n', 's', 't', 'l', 'r'] #Näitä ääntäessä kieli koskee hampaisiin. epäilen s ja r
+dentaalisetKonsonantit = ['n', 's', 't', 'l', 'r', 'd'] #Näitä ääntäessä kieli koskee hampaisiin. epäilen s ja r
 Klusiilit = ['p', 't', 'k', 'd', 'b', 'g']
 
 puolivokaalit = ['v','j']
@@ -53,13 +54,14 @@ Soinnittomat = ['p', 't', 'k', 's']
 ## -------------------- Diftongit -------------------- ##
 #diftongit, Vokaalit jotka voivat olla peräkkäin samassa tavussa
 diftongit = ['ei', 'ai', 'oi', 'ui', 'äi', 'öi', 'yi',    'au', 'eu', 'iu', 'ou',     'äy', 'öy', 'iy', 'ey']
-valjenevatdiftongit = ['ie', 'uo', 'yö'] #väljenevät diftongit ovat diftongeja, jos ne ovat ensimmäisessä tavussa. Esim: sie|ni  hy|gi|e|ni|a
+valjenevatdiftongit = ['ie',     'uo', 'yö'] #väljenevät diftongit ovat diftongeja, jos ne ovat ensimmäisessä tavussa. Esim: sie|ni  hy|gi|e|ni|a
 #Konsonanttiyhtymät
 kahdenKonsonantinYhtymat = ['lt', 'lk', 'lm', 'lp', 'lj', 'lv', 'ls', 'lh', 'rt', 'rk', 'rm', 'rp', 'rj', 'rv', 'rs', 'rh', 'rn', 'ht', 'hd', 'hk', 'hm', 'hj', 'hn', 'hv', 'hl', 'hr', 'st', 'sk', 'sp', 'sm','sn', 'sh', 'sv', 'ts', 'tk', 'tp', 'tj', 'tr', 'tv', 'th', 'ps', 'pr', 'pl', 'ks', 'kr', 'nk', 'nt', 'np', 'ns', 'nh', 'nj', 'mp', 'ms']
 kolmenKonsonantinYhtymat = ['mpp', 'ntt', 'nss', 'nkk', 'lpp', 'ltt', 'lss', 'lkk', 'rpp', 'rtt', 'rss', 'rkk']
 
 ## -------------------- Erikoismerkit -------------------- ##
-erikoismerkit = [' ', '-', "'", '.', ',', ':', ';', '?', '!', '…','(', ')', '[', ']', '{', '}', '⟨', '⟩', '|', '+', '-', '*', '/', '=', '≠', '≈', '<', '>', '≤', '≥', '(', ')', '[', ']', '{', '}', '×', '⋅', '÷', '%', '‰', '°', 'π'] #Kesken, täytä oleellisilla merkeillä
 paatemerkit = ['.', ',', ':', ';', '?', '!', '…'] #päättää lauseen
 sulkeet = ['(', ')', '[', ']', '{', '}', '⟨', '⟩']
 matemaattisetSymbolit = ['+', '-', '*', '/', '=', '≠', '≈', '<', '>', '≤', '≥', '(', ')', '[', ']', '{', '}', '×', '⋅', '÷', '%', '‰', '°', 'π']
+erikoismerkit = [' ', '-', "'", '.', ',', ':', ';', '?', '!', '…','(', ')', '[', ']', '{', '}', '⟨', '⟩', '|', '+', '-', '*', '/', '=', '≠', '≈', '<', '>', '≤', '≥', '(', ')', '[', ']', '{', '}', '×', '⋅', '÷', '%', '‰', '°', 'π'] #Kesken, täytä oleellisilla merkeillä
+erikoismerkit = erikoismerkit + paatemerkit + sulkeet

@@ -1,6 +1,6 @@
 ## -------------------- Verbin Taivutus -------------------- ##
 #Written by: Aarni Junkkala
-
+import SuomenKieliKirjasto as SKK
 # https://fi.wiktionary.org/wiki/Liite:Verbitaivutus/suomi/juoda
 
 class Muoto:
@@ -112,10 +112,10 @@ def EtsiTaivutusTyyppi(sana):
     #63
     # -(vokaali 2x) + da/dä
     #jäädä, myydä, saada, aikaansaada
-    if sana[-4] == "a" or sana[-4] == "ä" or sana[-4] == "o" or sana[-4] == "ö" or sana[-4] == "u" or sana[-4] == "y" or sana[-4] == "i" or sana[-4] == "e":
+    if sana[-4] in SKK.suomenkielisetVokaalit:
         if sana[-4] == sana[-3]: #Jos samat vokaalit
             if sana[-2] == "d":
-                if sana[-1] == "a" or sana[-1] == "ä":
+                if sana[-1] in SKK.väljätVokaalit:
                     return 63
 
     #64?
