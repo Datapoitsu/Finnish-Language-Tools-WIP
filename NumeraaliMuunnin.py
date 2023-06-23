@@ -217,12 +217,23 @@ def MuunnaNumeraaliksi(numero, jarjestysnumero = False, indikoitoistalukua = Fal
 
     return tulos
 
+def MuunnaLuvuksi(numeraali):
+    result = ""
+    if(len(numeraali) >= 7):
+        if numeraali[:7].lower() == "miinus ":
+            result += "-"
+            numeraali = numeraali[7:]
+    
+    while True:
+        changed = False
+        if not changed:
+            return result
 
 
 #Pieni pätkä, joka antaa testata koodia kun sitä ei käytetä kirjastona
 if __name__ == '__main__':
     while True:
-        print("Syötä luku jonka haluat muuttaa numeraaleiksi, tai q poistuaksesi.")
+        print("Syötä luku jonka haluat muuttaa numeraaleiksi, tai numeraali jonka haluat muuttaa luvuksi, tai q poistuaksesi.")
         numero = input()
 
         if numero in ["q", "Q"]:
@@ -230,7 +241,10 @@ if __name__ == '__main__':
 
         tulos = MuunnaNumeraaliksi(numero)
         if tulos is False:
-            print("Syötäthän luvun, eikä mitä ikinä tuo olikaan!")
-            continue
+            tulos = MuunnaLuvuksi(numero)
+            if tulos is False:
+                print("Syötäthän luvun tai numeraalin, etkä mitä ikinä tuo olikaan!")
+            else:
+                print(tulos)
         else:
             print(tulos)
