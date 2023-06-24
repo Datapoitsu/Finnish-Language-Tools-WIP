@@ -37,46 +37,20 @@ MuutNumeraalit = \
     ]
 PoikkeusNumeraalit = \
     [
-        [11, "yksitoista", "yhtätoistaa"],
-        [12, "kaksitoista", "kahtatoistaa"],
-        [13, "kolmetoista", "kolmeatoistaa"],
-        [14, "neljätoista", "neljäätoistaa"],
-        [15, "viisitoista", "viittätoistaa"],
-        [16, "kuusitoista", "kuuttatoistaa"],
-        [17, "seitsemäntoista", "seitsemäätoistaa"],
-        [18, "kahdenksantoista", "kahdeksaatoistaa"],
-        [19, "yhdeksäntoista", "yhdeksäätoistaa"],
+        [11, "yksitoista", "yhtätoistaa", "yhdestoistas"],
+        [12, "kaksitoista", "kahtatoistaa", "kahdestoistas"],
+        [13, "kolmetoista", "kolmeatoistaa", "kolmastoistas"],
+        [14, "neljätoista", "neljäätoistaa", "neljästoistas"],
+        [15, "viisitoista", "viittätoistaa", "viidestoistas"],
+        [16, "kuusitoista", "kuuttatoistaa", "kuudestoistas"],
+        [17, "seitsemäntoista", "seitsemäätoistaa", "seitsemästoistas"],
+        [18, "kahdenksantoista", "kahdeksaatoistaa", "kahdeksastoistas"],
+        [19, "yhdeksäntoista", "yhdeksäätoistaa", "yhdeksästoistas"],
     ]
 PoikkeusJarjestysNumerot = \
     [
         [1, "ensimmäinen"],
         [2, "toinen"],
-        [11, "yhdestoista"],
-        [12, "kahdestoistas"],
-        [13, "kolmastoistas"],
-        [14, "neljästoistas"],
-        [15, "viidestoistas"],
-        [16, "kuudestoistas"],
-        [17, "seitsemästoistas"],
-        [18, "kahdeksastoistas"],
-        [19, "yhdeksästoistas"],
-    ]
-DesimaaliNumeraalit = \
-    [
-        [1, "kymmenes"],
-        [2, "sadas"],
-        [3, "tuhannes"],
-        [6, "miljoonas"],
-        [9, "miljardis"],
-        [12, "biljoonas"],
-        [18, "triljoonas"],
-        [24, "kvardriljoonas"],
-        [30, "kvintiljoonas"],
-        [36, "sekstiljoonas"],
-        [42, "septiljoonas"],
-        [48, "oktiljoonas"],
-        [54, "noniljoonas"],
-        [60, "dekiljoonas"],
     ]
  
  #Testaa, onko annettu luku kelvollinen luku. Oikeastaan tarpeellinen vain, jos luku annetaan stringinä.
@@ -115,11 +89,11 @@ def onkoLuku(luku):
 #Sisäinen funktio, jota käytetää desimaalilukujen "jakajien" numeraalien muodostamiseen
 def DesimaaliNumeraali(desimaalienmaara):
 
-    for i in range(len(DesimaaliNumeraalit)-1, -1, -1):
-        if DesimaaliNumeraalit[i][0] == desimaalienmaara:
-            return DesimaaliNumeraalit[i][1] 
-        if(DesimaaliNumeraalit[i][0] < desimaalienmaara):
-            return DesimaaliNumeraali(desimaalienmaara - DesimaaliNumeraalit[i][0]) + DesimaaliNumeraalit[i][1]
+    for i in range(len(PotenssiNumeraalit)-1, -1, -1):
+        if PotenssiNumeraalit[i][0] == desimaalienmaara:
+            return PotenssiNumeraalit[i][3] 
+        if(PotenssiNumeraalit[i][0] < desimaalienmaara):
+            return DesimaaliNumeraali(desimaalienmaara - PotenssiNumeraalit[i][0]) + PotenssiNumeraalit[i][3]
 
 #indikoitoistalukua tarkoittaa sitä, miten esimerkiksi "kaksikymmentäkolme":ssa "kaksi" indikoi kymmeniä.
 def MuunnaNumeraaliksi(numero, jarjestysnumero = False, indikoitoistalukua = False):
@@ -179,7 +153,7 @@ def MuunnaNumeraaliksi(numero, jarjestysnumero = False, indikoitoistalukua = Fal
         if(not jarjestysnumero):
             tulos += PoikkeusNumeraalit[ennenDesimaaliErotinta-11][1]
         else:
-            tulos += PoikkeusJarjestysNumerot[ennenDesimaaliErotinta-9][1]
+            tulos += PoikkeusNumeraalit[ennenDesimaaliErotinta-11][3]
     else:
         for i in range(len(PotenssiNumeraalit)-1, -1, -1):
             if(i == 0):
@@ -226,6 +200,9 @@ def MuunnaLuvuksi(numeraali):
     
     while True:
         changed = False
+
+
+
         if not changed:
             return result
 
