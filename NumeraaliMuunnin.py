@@ -199,10 +199,11 @@ def MuunnaLuvuksi(numeraali):
     Osat = ""
     OsienNimittaja = ""
 
+    numeraali = numeraali.lower()
     NumeraalinOsat = numeraali.split(" ")
 
 
-    if NumeraalinOsat[0].lower() in ("miinus", "negatiivinen"):
+    if NumeraalinOsat[0] in ("miinus", "negatiivinen"):
         Negatiivinen = True
         NumeraalinOsat = NumeraalinOsat[1:]
         
@@ -212,14 +213,14 @@ def MuunnaLuvuksi(numeraali):
     if len(NumeraalinOsat) in (1, 4): # 1 == kokonaisluku, 4 == "kokonaisluku" "ja" "osat" "nimittäjä"
         if NumeraalinOsat[0][-1:] == "s":
             JarjestysNumero = True
-        Kokonaiset = MuunnaLuvuksiRekursio(NumeraalinOsat[0])
+        Kokonaiset = str(MuunnaLuvuksiRekursio(NumeraalinOsat[0]))
         NumeraalinOsat = NumeraalinOsat[1:]
     
     if len(NumeraalinOsat) < 2: # osat, nimittäjät
         return LuvunMuodostus(Negatiivinen, JarjestysNumero, Kokonaiset, Osat)
     
-    Osat = MuunnaLuvuksiRekursio(NumeraalinOsat[0])
-    OsienNimittaja = MuunnaLuvuksiRekursio(NumeraalinOsat[1])
+    Osat =str(MuunnaLuvuksiRekursio(NumeraalinOsat[0]))
+    OsienNimittaja = str(MuunnaLuvuksiRekursio(NumeraalinOsat[1]))
 
     while len(Osat) < len(OsienNimittaja):
         Osat = "0" + Osat
@@ -229,32 +230,87 @@ def MuunnaLuvuksi(numeraali):
 #Rekursiivisesti
 def MuunnaLuvuksiRekursio(numeraali):
     if numeraali == "":
-        return "1"
+        return ""
 
     Isoin = 0
-    IsoimmanIndeksi = 0
+    IsoimmanIndeksi = -1
     IsoimmanPituus = 0
-
     Indeksi = 0
+
     while Indeksi < len(numeraali) - 1:
+        IndeksiAlussa = Indeksi
+        TutkitunPituus = 0
         for i in range(len(PotenssiNumeraalit)-1, -1, -1):
-            if len(numeraali) + Indeksi >= len(PotenssiNumeraalit[i][1]):
-                Numerona = pow(10, PotenssiNumeraalit[i][0])
-                Isoin = max(Isoin, Numerona)
-                if Isoin == Numerona:
-                    IsoimmanIndeksi = Indeksi
-                    IsoimmanPituus = len(PotenssiNumeraalit[i][1])
-                    Indeksi += IsoimmanPituus
-                    if len(numeraali) > Indeksi and numeraali[Indeksi] in ("a", "s"):
-                        IsoimmanPituus += 1
-                        Indeksi += 1
+            for j in range(1,4):
+                if len(numeraali) + Indeksi >= len(PotenssiNumeraalit[i][j]):
+                    if numeraali[Indeksi:Indeksi+len(PotenssiNumeraalit[i][j])] == PotenssiNumeraalit[i][j]:
+                        Numerona = pow(10, PotenssiNumeraalit[i][0])
+                        Isoin = max(Isoin, Numerona)
+                        if Isoin == Numerona:
+                            IsoimmanIndeksi = Indeksi
+                            IsoimmanPituus = len(PotenssiNumeraalit[i][j])
+                        TutkitunPituus = len(PotenssiNumeraalit[i][j])
+        for i in range(len(MuutNumeraalit)-1, -1, -1):
+            for j in range(1,4):
+                if len(numeraali) + Indeksi >= len(MuutNumeraalit[i][j]):
+                    if numeraali[Indeksi:Indeksi+len(MuutNumeraalit[i][j])] == MuutNumeraalit[i][j]:
+                        Numerona = MuutNumeraalit[i][0]
+                        Isoin = max(Isoin, Numerona)
+                        if Isoin == Numerona:
+                            IsoimmanIndeksi = Indeksi
+                            IsoimmanPituus = len(MuutNumeraalit[i][j])
+                        TutkitunPituus = len(MuutNumeraalit[i][j])
+        for i in range(len(PoikkeusNumeraalit)-1, -1, -1):
+            for j in range(1,4):
+                if len(numeraali) + Indeksi >= len(PoikkeusNumeraalit[i][j]):
+                    if numeraali[Indeksi:Indeksi+len(PoikkeusNumeraalit[i][j])] == PoikkeusNumeraalit[i][j]:
+                        Numerona = PoikkeusNumeraalit[i][0]
+                        Isoin = max(Isoin, Numerona)
+                        if Isoin == Numerona:
+                            IsoimmanIndeksi = Indeksi
+                            IsoimmanPituus = len(PoikkeusNumeraalit[i][j])
+                        TutkitunPituus = len(PoikkeusNumeraalit[i][j])
+        for i in range(len(PoikkeusJarjestysNumerot)-1, -1, -1):
+            if len(numeraali) + Indeksi >= len(PoikkeusJarjestysNumerot[i][1]):
+                if numeraali[Indeksi:Indeksi+len(PoikkeusJarjestysNumerot[i][1])] == PoikkeusJarjestysNumerot[i][1]:
+                    Numerona = PoikkeusJarjestysNumerot[i][0]
+                    Isoin = max(Isoin, Numerona)
+                    if Isoin == Numerona:
+                        IsoimmanIndeksi = Indeksi
+                        IsoimmanPituus = len(PoikkeusJarjestysNumerot[i][1])
+                    TutkitunPituus = len(PoikkeusJarjestysNumerot[i][j])
+        Indeksi += TutkitunPituus
+        
+        if IndeksiAlussa == Indeksi:
+            break
 
-    return str(MuunnaLuvuksiRekursio(numeraali[:IsoimmanIndeksi]) * Isoin) + MuunnaLuvuksiRekursio(numeraali[IsoimmanIndeksi+IsoimmanPituus:])
+    if IsoimmanIndeksi == -1:
+        return 0
+
+    #Kasaus
+
+    Osoitin = ""
+    if numeraali[:IsoimmanIndeksi] != "":
+        Osoitin = str(max(int(MuunnaLuvuksiRekursio(numeraali[:IsoimmanIndeksi])), 1))
+
+    Varsinainen = str(Isoin)
+    if Isoin % 10 == 0 and Osoitin != "":
+        Varsinainen = str(Isoin)[1:]
+
+    Jalkeen = MuunnaLuvuksiRekursio(numeraali[IsoimmanIndeksi+IsoimmanPituus:])
+
+    #len(Varsinainen) Tarvitaan siltä varalta että Jalkeen on tyhjä
+    Varsinainen = Varsinainen[:len(Varsinainen)-len(Jalkeen)]
+
+    return \
+        Osoitin \
+        + Varsinainen \
+        + Jalkeen
 
 
 
 
-#Muunnetaan tiedot luvusta luvuksi
+#Muunnetaan luvun tiedot luvuksi
 def LuvunMuodostus(Negatiivinen, Jarjestysnumero, Kokonaiset, Osat):
     tulos = ""
 
@@ -268,7 +324,7 @@ def LuvunMuodostus(Negatiivinen, Jarjestysnumero, Kokonaiset, Osat):
 
     tulos += Osat
 
-    if Jarjestysnumero != "":
+    if Jarjestysnumero == True:
         tulos+="."
     
     return tulos
@@ -285,10 +341,6 @@ if __name__ == '__main__':
 
         tulos = MuunnaNumeraaliksi(numero)
         if tulos is False:
-            tulos = MuunnaLuvuksi(numero)
-            if tulos is False:
-                print("Syötäthän luvun tai numeraalin, etkä mitä ikinä tuo olikaan!")
-            else:
-                print(tulos)
+            print(MuunnaLuvuksi(numero))
         else:
             print(tulos)
