@@ -216,11 +216,14 @@ def MuunnaLuvuksi(numeraali):
         Kokonaiset = str(MuunnaLuvuksiRekursio(NumeraalinOsat[0]))
         NumeraalinOsat = NumeraalinOsat[1:]
     
-    if len(NumeraalinOsat) < 2: # osat, nimittäjät
+    if len(NumeraalinOsat) < 2: # "ja" "osat" "nimittäjä"
         return LuvunMuodostus(Negatiivinen, JarjestysNumero, Kokonaiset, Osat)
-    
+
+    if len(NumeraalinOsat) == 3:
+        NumeraalinOsat = NumeraalinOsat[1:]
+
     Osat =str(MuunnaLuvuksiRekursio(NumeraalinOsat[0]))
-    OsienNimittaja = str(MuunnaLuvuksiRekursio(NumeraalinOsat[1]))
+    OsienNimittaja = str(MuunnaLuvuksiRekursio(NumeraalinOsat[1][:-4]))[1:]
 
     while len(Osat) < len(OsienNimittaja):
         Osat = "0" + Osat
