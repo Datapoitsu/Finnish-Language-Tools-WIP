@@ -191,20 +191,87 @@ def MuunnaNumeraaliksi(numero, jarjestysnumero = False, indikoitoistalukua = Fal
 
     return tulos
 
+# formatoi = sisällytä miinus merkki sekä järjestysnumerolle piste loppuun.
 def MuunnaLuvuksi(numeraali):
-    result = ""
-    if(len(numeraali) >= 7):
-        if numeraali[:7].lower() == "miinus ":
-            result += "-"
-            numeraali = numeraali[7:]
+    Negatiivinen = False
+    JarjestysNumero = False
+    Kokonaiset = ""
+    Osat = ""
+    OsienNimittaja = ""
+
+    NumeraalinOsat = numeraali.split(" ")
+
+
+    if NumeraalinOsat[0].lower() in ("miinus", "negatiivinen"):
+        Negatiivinen = True
+        NumeraalinOsat = NumeraalinOsat[1:]
+        
+    if len(NumeraalinOsat) < 1:
+        return LuvunMuodostus(Negatiivinen, JarjestysNumero, Kokonaiset, Osat)
     
-    while True:
-        changed = False
+    if len(NumeraalinOsat) in (1, 4): # 1 == kokonaisluku, 4 == "kokonaisluku" "ja" "osat" "nimittäjä"
+        if NumeraalinOsat[0][-1:] == "s":
+            JarjestysNumero = True
+        Kokonaiset = MuunnaLuvuksiRekursio(NumeraalinOsat[0])
+        NumeraalinOsat = NumeraalinOsat[1:]
+    
+    if len(NumeraalinOsat) < 2: # osat, nimittäjät
+        return LuvunMuodostus(Negatiivinen, JarjestysNumero, Kokonaiset, Osat)
+    
+    Osat = MuunnaLuvuksiRekursio(NumeraalinOsat[0])
+    OsienNimittaja = MuunnaLuvuksiRekursio(NumeraalinOsat[1])
+
+    while len(Osat) < len(OsienNimittaja):
+        Osat = "0" + Osat
+
+    return LuvunMuodostus(Negatiivinen, JarjestysNumero, Kokonaiset, Osat)
+
+#Rekursiivisesti
+def MuunnaLuvuksiRekursio(numeraali):
+    if numeraali == "":
+        return "1"
+
+    Isoin = 0
+    IsoimmanIndeksi = 0
+    IsoimmanPituus = 0
+
+    Indeksi = 0
+    while Indeksi < len(numeraali) - 1:
+        for i in range(len(PotenssiNumeraalit)-1, -1, -1):
+            if len(numeraali) + Indeksi >= len(PotenssiNumeraalit[i][1]):
+                Numerona = pow(10, PotenssiNumeraalit[i][0])
+                Isoin = max(Isoin, Numerona)
+                if Isoin == Numerona:
+                    IsoimmanIndeksi = Indeksi
+                    IsoimmanPituus = len(PotenssiNumeraalit[i][1])
+                    Indeksi += IsoimmanPituus
+                    if len(numeraali) > Indeksi and numeraali[Indeksi] in ("a", "s"):
+                        IsoimmanPituus += 1
+                        Indeksi += 1
+
+    return str(MuunnaLuvuksiRekursio(numeraali[:IsoimmanIndeksi]) * Isoin) + MuunnaLuvuksiRekursio(numeraali[IsoimmanIndeksi+IsoimmanPituus:])
 
 
 
-        if not changed:
-            return result
+
+#Muunnetaan tiedot luvusta luvuksi
+def LuvunMuodostus(Negatiivinen, Jarjestysnumero, Kokonaiset, Osat):
+    tulos = ""
+
+    if(Negatiivinen):
+        tulos += "-"
+
+    tulos += Kokonaiset
+    
+    if Osat != "":
+        tulos+="."
+
+    tulos += Osat
+
+    if Jarjestysnumero != "":
+        tulos+="."
+    
+    return tulos
 
 
 #Pieni pätkä, joka antaa testata koodia kun sitä ei käytetä kirjastona
